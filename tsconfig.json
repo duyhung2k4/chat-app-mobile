@@ -1,6 +1,12 @@
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
-    "strict": true
-  }
+    "module": "ES2020",
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": ["./*"],
+    },
+  },
+  "typeRoots": ["./src/types"],
+  "include": ["**/*.tsx"]
 }
