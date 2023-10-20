@@ -23,8 +23,6 @@ const AcceptCodeRegister: React.FC<Props> = ({ navigation }) => {
   const [value, setValue] = useState<string>("");
   const [exp, setExp] = useState<number | undefined>(undefined);
 
-  console.log(exp);
-
   const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT });
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
     value,
