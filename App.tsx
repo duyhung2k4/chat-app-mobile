@@ -20,5 +20,6 @@ const styles = StyleSheet.create({
   root: {
     height: "100%",
     width: "100%",
+    backgroundColor: "#1C202F",
   }
 })

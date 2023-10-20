@@ -25,7 +25,7 @@ const AppNavigation: React.FC = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="AuthStack_Register"
+        initialRouteName="AuthStack_AcceptCodeRegister"
         screenOptions={{
           headerShown: false,
         }}
