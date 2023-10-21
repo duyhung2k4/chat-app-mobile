@@ -18,6 +18,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack/lib/types
 import { TypeAuthStack } from "@/stack/auth.stack";
 import { TemporaryInfo } from "@/model/temporaryInfo";
 import AlertCustom, { AlertCustomProps } from "@/components/Alert";
+import { StyleSheet } from "react-native";
 
 
 interface FormRegister {
@@ -125,37 +126,14 @@ const Register: React.FC<Props> = ({ navigation }) => {
 
   return (
     <ScrollViewCustom contentContainerStyle={{ flexGrow: 1 }}>
-      <View
-        style={{
-          backgroundColor: "#1C202F",
-          width: "100%",
-          height: "100%",
-          padding: 20,
-          flexDirection: "column",
-          justifyContent: "center"
-        }}
-      >
+      <View style={styles.root}>
         <YstackCustom spacing={50}>
 
           <YstackCustom spacing={20}>
-            <View
-              style={{
-                width: "100%",
-                alignItems: "center",
-              }}
-            >
+            <View style={{ width: "100%", alignItems: "center" }}>
               <IconChat height={60} width={60} />
             </View>
-            <Text
-              style={{
-                fontSize: 40,
-                textTransform: "uppercase",
-                width: "100%",
-                textAlign: "center",
-                color: "#766FB8",
-                fontWeight: "800",
-              }}
-            >Register</Text>
+            <Text style={styles.title}>Register</Text>
           </YstackCustom>
 
 
@@ -218,5 +196,24 @@ const Register: React.FC<Props> = ({ navigation }) => {
     </ScrollViewCustom>
   )
 }
+
+const styles = StyleSheet.create({
+  root: {
+    backgroundColor: "#1C202F",
+    width: "100%",
+    height: "100%",
+    padding: 20,
+    flexDirection: "column",
+    justifyContent: "center"
+  },
+  title: {
+    fontSize: 40,
+    textTransform: "uppercase",
+    width: "100%",
+    textAlign: "center",
+    color: "#766FB8",
+    fontWeight: "800",
+  }
+})
 
 export default Register;

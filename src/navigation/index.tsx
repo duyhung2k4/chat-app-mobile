@@ -10,6 +10,7 @@ import { TypeAuthStack } from "@/stack/auth.stack";
 import { TypeHomeStack } from "@/stack/home.stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import CheckAuth from "@/screen/Auth/CheckAuth";
 
 
 
@@ -25,12 +26,13 @@ const AppNavigation: React.FC = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="AuthStack_Login"
+        initialRouteName="AuthStack_CheckAuth"
         screenOptions={{
           headerShown: false,
         }}
       >
         <Stack.Group>
+          <Stack.Screen name="AuthStack_CheckAuth" component={CheckAuth}/>
           <Stack.Screen name="AuthStack_AcceptCodeRegister" component={AcceptCodeRegister} />
           <Stack.Screen name="AuthStack_Register" component={Register} />
           <Stack.Screen name="AuthStack_Login" component={Login}/>

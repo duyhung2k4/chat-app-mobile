@@ -7,6 +7,7 @@ import IconSuccess from "@/assets/icon/success-svgrepo-com.svg";
 import IconWarning from "@/assets/icon/warning-circle-svgrepo-com.svg";
 import IconError from "@/assets/icon/error-svgrepo-com.svg";
 import IconNotification from "@/assets/icon/notification-svgrepo-com.svg";
+import { StyleSheet } from "react-native";
 
 export type TypeAlert = "success" | "warning" | "error" | "notification";
 export interface AlertCustomProps {
@@ -29,24 +30,9 @@ const AlertCustom: React.FC<AlertCustomProps> = (props) => {
       visible={props.open}
       ignoreBackgroundPress
     >
-      <View
-        style={{
-          borderRadius: 8,
-          backgroundColor: "#FFFFFF",
-          alignItems: "center",
-          justifyContent: "space-between",
-          paddingHorizontal: 20,
-          paddingVertical: 20,
-          width: "100%",
-        }}
-      >
+      <View style={styles.root}>
         <YstackCustom spacing={30}>
-          <View
-            style={{
-              width: "100%",
-              alignItems: "center",
-            }}
-          >
+          <View style={{ width: "100%", alignItems: "center" }}>
             {iconWithType[props.typeAlert || "notification"]}
             <Text style={{ marginTop: 10 }}>{props.textAlert}</Text>
           </View>
@@ -61,5 +47,17 @@ const AlertCustom: React.FC<AlertCustomProps> = (props) => {
     </Dialog>
   )
 }
+
+const styles = StyleSheet.create({
+  root: {
+    borderRadius: 8,
+    backgroundColor: "#FFFFFF",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 20,
+    paddingVertical: 20,
+    width: "100%",
+  }
+})
 
 export default AlertCustom;

@@ -1,20 +1,23 @@
+import React, { useState } from "react";
 import ButtonCustom from "@/components/Button";
 import DividerCustom from "@/components/Divider";
 import TextInputCustom from "@/components/Form/TextInput";
 import ScrollViewCustom from "@/components/ScrollView";
 import YstackCustom from "@/components/YStack";
+import AlertCustom, { AlertCustomProps } from "@/components/Alert";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as Yup from "yup";
+
+import IconChat from "@/assets/icon/chat-round-dots-svgrepo-com.svg";
+
 import { useLoginMutation } from "@/redux/query/api/auth";
 import { TypeHomeStack } from "@/stack/home.stack";
 import { NavigationProp, useNavigation } from "@react-navigation/core";
 import { useFormik } from "formik";
-import React, { useState } from "react";
 import { Text, View } from "react-native-ui-lib";
-import * as Yup from "yup";
-import IconChat from "@/assets/icon/chat-round-dots-svgrepo-com.svg";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { TypeAuthStack } from "@/stack/auth.stack";
-import AlertCustom, { AlertCustomProps } from "@/components/Alert";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { StyleSheet } from "react-native";
 
 interface FormLogin {
   username: string
@@ -77,38 +80,15 @@ const Login: React.FC<Props> = ({ navigation }) => {
 
   return (
     <ScrollViewCustom contentContainerStyle={{ flexGrow: 1 }} >
-      <View
-        style={{
-          height: "100%",
-          width: "100%",
-          backgroundColor: "#1C202F",
-          justifyContent: "center",
-          alignItems: "center",
-          paddingHorizontal: 20,
-        }}
-      >
+      <View style={styles.root}>
         <YstackCustom spacing={50}>
 
 
           <YstackCustom spacing={20}>
-            <View
-              style={{
-                width: "100%",
-                alignItems: "center",
-              }}
-            >
+            <View style={{ width: "100%", alignItems: "center" }}>
               <IconChat height={60} width={60} />
             </View>
-            <Text
-              style={{
-                fontSize: 40,
-                textTransform: "uppercase",
-                width: "100%",
-                textAlign: "center",
-                color: "#766FB8",
-                fontWeight: "800",
-              }}
-            >Login</Text>
+            <Text style={styles.title}>Login</Text>
           </YstackCustom>
 
 
@@ -159,5 +139,24 @@ const Login: React.FC<Props> = ({ navigation }) => {
     </ScrollViewCustom>
   )
 }
+
+const styles = StyleSheet.create({
+  root: {
+    height: "100%",
+    width: "100%",
+    backgroundColor: "#1C202F",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: 20,
+  },
+  title: {
+    fontSize: 40,
+    textTransform: "uppercase",
+    width: "100%",
+    textAlign: "center",
+    color: "#766FB8",
+    fontWeight: "800",
+  }
+})
 
 export default Login;
