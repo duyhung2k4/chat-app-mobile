@@ -17,6 +17,7 @@ import { InfoAcceptCode } from "@/storeage/infoAcceptCode";
 import { NativeStackScreenProps } from "@react-navigation/native-stack/lib/typescript/src/types";
 import { TypeAuthStack } from "@/stack/auth.stack";
 import { TemporaryInfo } from "@/model/temporaryInfo";
+import AlertCustom, { AlertCustomProps } from "@/components/Alert";
 
 
 interface FormRegister {
@@ -58,7 +59,11 @@ const Register: React.FC<Props> = ({ navigation }) => {
   });
 
   const [post, { isLoading }] = useSendInfoRegisterMutation();
-  const [alert, setAlert] = useState<boolean>(false);
+  const [alert, setAlert] = useState<Omit<AlertCustomProps, "onClose">>({
+    textAlert: "",
+    typeAlert: "notification",
+    open: false,
+  });
 
   const handlerSubmit = async (values: FormRegister) => {
     const data: SendInfoRegisterPayload = {
@@ -93,7 +98,11 @@ const Register: React.FC<Props> = ({ navigation }) => {
 
 
     } else {
-      setAlert(true);
+      setAlert({
+        typeAlert: "error",
+        textAlert: "Error",
+        open: true,
+      })
     }
   }
 
@@ -196,11 +205,16 @@ const Register: React.FC<Props> = ({ navigation }) => {
             <ButtonCustom
               disabled={isLoading}
               label="Login"
+              onPress={() => navigation.navigate("AuthStack_Login")}
             />
           </YstackCustom>
 
         </YstackCustom>
       </View>
+      <AlertCustom
+        {...alert}
+        onClose={() => setAlert({ ...alert, open: false })}
+      /> 
     </ScrollViewCustom>
   )
 }

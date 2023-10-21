@@ -6,6 +6,10 @@ export interface SendInfoRegisterPayload {
   password: string
   email: string
 }
+export interface SendCode {
+  idTemporaryCredential: number
+  code: string
+}
 export interface SendInfoRegisterReponse {
   id: number
   username: string

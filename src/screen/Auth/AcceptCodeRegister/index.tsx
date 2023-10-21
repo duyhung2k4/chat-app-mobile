@@ -15,18 +15,28 @@ import { StyleSheet } from "react-native";
 import { TypeAuthStack } from "@/stack/auth.stack";
 import { InfoAcceptCode } from "@/storeage/infoAcceptCode";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { useSendCodeRegisterMutation, useSendInfoRegisterMutation } from "@/redux/query/api/auth";
+import AlertCustom, { AlertCustomProps } from "@/components/Alert";
 
 const CELL_COUNT = 6;
 
 type Props = NativeStackScreenProps<TypeAuthStack, "AuthStack_AcceptCodeRegister">
 const AcceptCodeRegister: React.FC<Props> = ({ navigation }) => {
-  const [value, setValue] = useState<string>("");
+  const [code, setCode] = useState<string>("");
   const [exp, setExp] = useState<number | undefined>(undefined);
 
-  const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT });
+  const [sendCode, { isLoading: loadingSendCode }] = useSendCodeRegisterMutation();
+  const [resendCode, { isLoading: loadingResendCode }] = useSendInfoRegisterMutation();
+  const [alert, setAlert] = useState<Omit<AlertCustomProps, "onClose">>({
+    textAlert: "",
+    typeAlert: "notification",
+    open: false,
+  });
+
+  const ref = useBlurOnFulfill({ value: code, cellCount: CELL_COUNT });
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
-    value,
-    setValue,
+    value: code,
+    setValue: setCode,
   });
 
   const getExp = async () => {
@@ -38,6 +48,77 @@ const AcceptCodeRegister: React.FC<Props> = ({ navigation }) => {
     const objectJson: InfoAcceptCode = JSON.parse(textJson);
     const exp = dayjs(objectJson.exp).diff(dayjs(), "second");
     setExp(exp);
+  }
+
+  const handlerSendCode = async () => {
+    const textJson = await AsyncStorage.getItem("id");
+    if(textJson === null) { 
+      navigation.navigate("AuthStack_Register");
+      return;
+    }
+
+    const objectJson: InfoAcceptCode = JSON.parse(textJson);
+
+    const result = await sendCode({
+      idTemporaryCredential: objectJson.id,
+      code,
+    });
+
+    if("data" in result) {
+      setAlert({
+        typeAlert: "success",
+        textAlert: "Success",
+        open: true,
+      })
+    } else {
+      setAlert({
+        typeAlert: "error",
+        textAlert: "Error",
+        open: true,
+      })
+    }
+  }
+
+  const handlerResendCode = async () => {
+    const textJson = await AsyncStorage.getItem("id");
+    if(textJson === null) { 
+      navigation.navigate("AuthStack_Register");
+      return;
+    }
+    const objectJson: InfoAcceptCode = JSON.parse(textJson);
+
+    const result = await resendCode({
+      username: objectJson.username,
+      password: objectJson.password,
+      email: objectJson.email,
+    });
+
+    if("data" in result) {
+      if(result.data.data !==  undefined) {
+        const exp = dayjs(result.data.data.timeEnd).toString();
+        const expLocal = dayjs(result.data.data.timeEnd).add(60, "s").toString();
+
+        const saveInfo: InfoAcceptCode = {
+          id: result.data.data.id,
+          email: objectJson.email,
+          username: objectJson.username,
+          password: objectJson.password,
+          exp,
+          expLocal,
+        }
+
+        const _ = await AsyncStorage.setItem("id", JSON.stringify(saveInfo));
+
+        setCode("");
+        getExp();
+      }
+    } else {
+      setAlert({
+        typeAlert: "error",
+        textAlert: "Error",
+        open: true,
+      })
+    }
   }
 
   const cancelAccept = async () => {
@@ -81,8 +162,8 @@ const AcceptCodeRegister: React.FC<Props> = ({ navigation }) => {
         <CodeField
           ref={ref}
           {...props}
-          value={value}
-          onChangeText={setValue}
+          value={code}
+          onChangeText={setCode}
           cellCount={CELL_COUNT}
           rootStyle={styles.codeFieldRoot}
           keyboardType="number-pad"
@@ -104,9 +185,40 @@ const AcceptCodeRegister: React.FC<Props> = ({ navigation }) => {
           marginTop: 50,
         }}
       >
-        <ButtonCustom onPress={cancelAccept} type="cancel" style={styles.buttonCancel} label="Cancel" />
-        <ButtonCustom style={styles.buttonAccept} label="Accept" />
+        <ButtonCustom 
+          onPress={cancelAccept} 
+          type="cancel" 
+          style={styles.buttonCancel} 
+          label="Cancel" 
+          disabled={loadingResendCode || loadingSendCode}
+        />
+        {
+          (exp !== undefined && exp <= 0) ?
+            <ButtonCustom 
+              style={styles.buttonAccept} 
+              label="Resend" 
+              loading={loadingResendCode}
+              onPress={handlerResendCode}
+            /> :
+            <ButtonCustom 
+              disabled={code.length < 6} 
+              style={styles.buttonAccept} 
+              label="Accept" 
+              onPress={handlerSendCode}
+              loading={loadingSendCode}
+            />
+        }
       </View>
+
+      <AlertCustom
+        {...alert}
+        onClose={() => {
+          if(alert.typeAlert === "success") {
+            navigation.navigate("AuthStack_Login");
+          }
+          setAlert({ ...alert, open: false });
+        }}
+      /> 
     </View>
   )
 }
