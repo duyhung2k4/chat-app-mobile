@@ -8,15 +8,16 @@ import { TypeHomeStack } from "@/stack/home.stack";
 import { useLoginTokenMutation } from "@/redux/query/api/auth";
 import { NavigationProp, useNavigation } from "@react-navigation/core";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { useSocket } from "@/hook/useSocket.hook";
 
 
 
 
 type Props = NativeStackScreenProps<TypeAuthStack, "AuthStack_CheckAuth">;
 const CheckAuth: React.FC<Props> = ({ navigation }) => {
-  
   const [loginToken] = useLoginTokenMutation();
   const navigationHome = useNavigation<NavigationProp<TypeHomeStack, "HomeStack_Home">>();
+  const socket = useSocket("global");
 
   const checkAccessToken = async () => {
     const accessToken = await AsyncStorage.getItem("accessToken");
@@ -29,6 +30,7 @@ const CheckAuth: React.FC<Props> = ({ navigation }) => {
   }
 
   useEffect(() => {
+    socket.connect();
     checkAccessToken();
   }, []);
   return (
