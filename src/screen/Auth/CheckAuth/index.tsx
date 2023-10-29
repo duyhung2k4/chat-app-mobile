@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { View } from "react-native-ui-lib";
@@ -8,7 +8,7 @@ import { TypeHomeStack } from "@/stack/home.stack";
 import { useLoginTokenMutation } from "@/redux/query/api/auth";
 import { NavigationProp, useNavigation } from "@react-navigation/core";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { useSocket } from "@/hook/useSocket.hook";
+import { useSocket } from "@/hook/useSocket";
 
 
 
@@ -16,6 +16,7 @@ import { useSocket } from "@/hook/useSocket.hook";
 type Props = NativeStackScreenProps<TypeAuthStack, "AuthStack_CheckAuth">;
 const CheckAuth: React.FC<Props> = ({ navigation }) => {
   const [loginToken] = useLoginTokenMutation();
+
   const navigationHome = useNavigation<NavigationProp<TypeHomeStack, "HomeStack_Home">>();
   const socket = useSocket("global");
 
@@ -29,10 +30,21 @@ const CheckAuth: React.FC<Props> = ({ navigation }) => {
     }
   }
 
+  const handlerConnect = async () => {
+    const accessToken = await AsyncStorage.getItem("accessToken");
+    if(accessToken !== null) {
+      socket.auth = {
+        accessToken: accessToken,
+      };
+      socket.connect();
+    }
+  }
+
   useEffect(() => {
-    socket.connect();
+    handlerConnect();
     checkAccessToken();
   }, []);
+
   return (
     <View
       style={{

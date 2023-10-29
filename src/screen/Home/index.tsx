@@ -3,8 +3,8 @@ import ButtonCustom from "@/components/Button";
 import YstackCustom from "@/components/YStack";
 
 import { Text, View } from "react-native-ui-lib";
-import { useSocket } from "@/hook/useSocket.hook";
 import { DEFAULT_EVENT } from "@/socket/event";
+import { useSocket } from "@/hook/useSocket";
 
 const Home: React.FC = () => {
 

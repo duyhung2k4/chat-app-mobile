@@ -6,4 +6,5 @@ const managerSocket = new Manager("http://10.0.2.2:3001", {
 
 export const globalSocket = managerSocket.socket("/");
 export const adminSocket = managerSocket.socket("/admin");
+export const defaultSocket = managerSocket.socket("/", { auth: {} });
 export default managerSocket;
