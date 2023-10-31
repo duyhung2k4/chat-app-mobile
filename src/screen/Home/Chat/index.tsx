@@ -1,3 +1,4 @@
+import ChatItem from "@/components/ChatItem";
 import Search from "@/core/Search";
 import React from "react";
 import { StyleSheet } from "react-native";
@@ -9,6 +10,7 @@ const Chat: React.FC = () => {
       <View style={styles.boxSearch}>
         <Search/>
       </View>
+      <ChatItem/>
     </View>
   )
 }
@@ -20,7 +22,7 @@ const styles = StyleSheet.create({
   },
 
   boxSearch: {
-    paddingTop: 5,
+    paddingTop: 10,
     paddingLeft: 5,
     paddingRight: 5,
   }
