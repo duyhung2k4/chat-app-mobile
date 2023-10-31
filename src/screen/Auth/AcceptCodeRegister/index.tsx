@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import ButtonCustom from "@/components/Button";
+import ButtonCustom from "@/core/Button";
 
 
 import { Text, View } from "react-native-ui-lib";
@@ -16,7 +16,7 @@ import { TypeAuthStack } from "@/stack/auth.stack";
 import { InfoAcceptCode } from "@/storeage/infoAcceptCode";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useSendCodeRegisterMutation, useSendInfoRegisterMutation } from "@/redux/query/api/auth";
-import AlertCustom, { AlertCustomProps } from "@/components/Alert";
+import AlertCustom, { AlertCustomProps } from "@/core/Alert";
 
 const CELL_COUNT = 6;
 

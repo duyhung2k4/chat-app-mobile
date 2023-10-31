@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import * as Yup from "yup";
-import ButtonCustom from "@/components/Button";
-import DividerCustom from "@/components/Divider";
-import TextInputCustom from "@/components/Form/TextInput";
-import YstackCustom from "@/components/YStack";
+import ButtonCustom from "@/core/Button";
+import DividerCustom from "@/core/Divider";
+import TextInputCustom from "@/core/Form/TextInput";
+import YstackCustom from "@/core/YStack";
 import IconChat from "@/assets/icon/chat-round-dots-svgrepo-com.svg";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import ScrollViewCustom from "@/components/ScrollView";
+import ScrollViewCustom from "@/core/ScrollView";
 
 import { useFormik } from "formik";
 import { Text, View } from "react-native-ui-lib";
@@ -17,7 +17,7 @@ import { InfoAcceptCode } from "@/storeage/infoAcceptCode";
 import { NativeStackScreenProps } from "@react-navigation/native-stack/lib/typescript/src/types";
 import { TypeAuthStack } from "@/stack/auth.stack";
 import { TemporaryInfo } from "@/model/temporaryInfo";
-import AlertCustom, { AlertCustomProps } from "@/components/Alert";
+import AlertCustom, { AlertCustomProps } from "@/core/Alert";
 import { StyleSheet } from "react-native";
 
 

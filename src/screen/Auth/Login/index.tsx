@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import ButtonCustom from "@/components/Button";
-import DividerCustom from "@/components/Divider";
-import TextInputCustom from "@/components/Form/TextInput";
-import ScrollViewCustom from "@/components/ScrollView";
-import YstackCustom from "@/components/YStack";
-import AlertCustom, { AlertCustomProps } from "@/components/Alert";
+import ButtonCustom from "@/core/Button";
+import DividerCustom from "@/core/Divider";
+import TextInputCustom from "@/core/Form/TextInput";
+import ScrollViewCustom from "@/core/ScrollView";
+import YstackCustom from "@/core/YStack";
+import AlertCustom, { AlertCustomProps } from "@/core/Alert";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Yup from "yup";
 
