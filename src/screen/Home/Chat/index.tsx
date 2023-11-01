@@ -1,15 +1,16 @@
+import React from "react";
 import ChatItem from "@/components/ChatItem";
 import Line from "@/core/Line";
 import ScrollViewCustom from "@/core/ScrollView";
-import Search from "@/core/Search";
-import React from "react";
+import SearchInput from "@/core/Form/SearchInput";
+
 import { StyleSheet } from "react-native";
 import { View } from "react-native-ui-lib";
 
 const Chat: React.FC = () => {
   return (
     <View style={styles.root}>
-      <Search />
+      <SearchInput />
       <Line height={2.5} />
       <ScrollViewCustom>
         <View style={styles.listChat}>

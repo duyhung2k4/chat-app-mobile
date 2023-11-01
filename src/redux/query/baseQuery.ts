@@ -4,6 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import type { BaseQueryFn } from '@reduxjs/toolkit/query'
 import type { AxiosRequestConfig, AxiosError } from 'axios'
 import { BASE_URL } from '@env'
+import { ITEM_ASYNC_STORE_AGE } from '@/constants/itemAsycnStoreAge'
 
 const axiosBaseQuery =
   (
@@ -21,7 +22,7 @@ const axiosBaseQuery =
   > =>
   async ({ url, method, data, params, headers }) => {
     if(headers?.Authorization !== undefined) {
-      const token = await AsyncStorage.getItem("accessToken");
+      const token = await AsyncStorage.getItem(ITEM_ASYNC_STORE_AGE.ACCESS_TOKEN);
       headers.Authorization = headers.Authorization + token;
     }
 

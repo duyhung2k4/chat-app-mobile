@@ -12,11 +12,6 @@ const TextInputCustom: React.FC<TextInputCustomProps> = (props) => {
       <TextField
         style={styles.field}
         labelStyle={styles.labelField}
-        containerStyle={{
-          backgroundColor: "#232736",
-          borderRadius: 8,
-          paddingLeft: 10,
-        }}
         placeholderTextColor={"gray"}
         {...props}
       />

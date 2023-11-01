@@ -9,6 +9,7 @@ import { useLoginTokenMutation } from "@/redux/query/api/auth";
 import { NavigationProp, useNavigation } from "@react-navigation/core";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useSocket } from "@/hook/useSocket";
+import { ITEM_ASYNC_STORE_AGE } from "@/constants/itemAsycnStoreAge";
 
 
 
@@ -21,7 +22,7 @@ const CheckAuth: React.FC<Props> = ({ navigation }) => {
   const socket = useSocket("global");
 
   const checkAccessToken = async () => {
-    const accessToken = await AsyncStorage.getItem("accessToken");
+    const accessToken = await AsyncStorage.getItem(ITEM_ASYNC_STORE_AGE.ACCESS_TOKEN);
     if(accessToken === null) {
       navigation.navigate("AuthStack_Login");
     } else {
@@ -31,7 +32,7 @@ const CheckAuth: React.FC<Props> = ({ navigation }) => {
   }
 
   const handlerConnect = async () => {
-    const accessToken = await AsyncStorage.getItem("accessToken");
+    const accessToken = await AsyncStorage.getItem(ITEM_ASYNC_STORE_AGE.ACCESS_TOKEN);
     if(accessToken !== null) {
       socket.auth = {
         accessToken: accessToken,

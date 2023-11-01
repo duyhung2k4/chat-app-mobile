@@ -1,11 +1,11 @@
 import React from "react";
-import TextInputCustom from "../Form/TextInput";
+import TextInputCustom from "../TextInput";
 import IconSearch from "@/assets/icon/search.svg";
 
 import { View } from "react-native-ui-lib";
 import { StyleSheet } from "react-native";
 
-const Search: React.FC = () => {
+const SearchInput: React.FC = () => {
 
   const Icon = React.forwardRef((props, ref) => {
     return (
@@ -20,6 +20,12 @@ const Search: React.FC = () => {
       <TextInputCustom
         placeholder="Search"
         leadingAccessory={<Icon />}
+        containerStyle={{
+          backgroundColor: "#232736",
+          paddingLeft: 10,
+          paddingRight: 10,
+          borderRadius: 8,
+        }}
       />
     </View>
   )
@@ -31,4 +37,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default Search;
+export default SearchInput;

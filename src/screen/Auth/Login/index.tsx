@@ -18,6 +18,7 @@ import { Text, View } from "react-native-ui-lib";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { TypeAuthStack } from "@/stack/auth.stack";
 import { StyleSheet } from "react-native";
+import { ITEM_ASYNC_STORE_AGE } from "@/constants/itemAsycnStoreAge";
 
 interface FormLogin {
   username: string
@@ -66,7 +67,7 @@ const Login: React.FC<Props> = ({ navigation }) => {
           open: true,
         })  
       } else {
-        const _ = await AsyncStorage.setItem("accessToken", accessToken);
+        const _ = await AsyncStorage.setItem(ITEM_ASYNC_STORE_AGE.ACCESS_TOKEN, accessToken);
         navigationHome.navigate("HomeStack_Home");
       }
     } else {
